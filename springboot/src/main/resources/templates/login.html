@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆界面</title>
+    <link rel="stylesheet" href="/springboot/css/login.css">
+    <script src="/springboot/js/vue.js"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            new Vue({
+                el: '#login',
+                data: {
+                    login_title: '登录系统',
+                    login_f: true,
+                    regisyer_f: false,
+                    btnName: '登录',
+                    username: '',
+                    password: '',
+                    password1: '',
+                    email: ''
+                },
+                methods:{
+                    aclick:function(event){
+                        var li = event.srcElement;
+                        if ('登录中心' == li.innerText)
+                        {
+                            this.login_f = true;
+                            this.regisyer_f = false;
+                            this.login_title = "登录中心";
+                            this.btnName = "登录";
+                        }else{
+                            this.regisyer_f = true;
+                            this.login_f = false;
+                            this.login_title = "注册中心";
+                            this.btnName = "注册";
+                        }
+                    },
+                    submit:function(event){
+                        var url = "./login/error";
+                        if(this.login_f)
+                        {
+                            url = "./login/submit";
+                            //alert("登录");
+                        }else{
+                            url = "./login/regist";
+                            //alert("注册");
+                        }
+                        debugger
+                        var user = new Object();
+                        user.username = this.username;
+                        user.password = this.password;
+                        user.password1 = this.password1;
+                        user.email = this.email;
+
+                        $.ajax({
+                            type: "post",
+                            async: false,//同步，异步
+                            url: url, //请求的服务端地址
+                            data: user,
+                            dataType: "json",
+                            success:function(data){
+                                 //成功之后的处理，返回的数据就是 data
+                                 alert(JSON.stringify(data));
+                            },
+                            error:function(i, s, e){
+                                alert('error'); //错误的处理
+                            }
+                        });
+                    },
+                    rest:function(event){
+                        this.username = '',
+                            this.password = '',
+                            this.password1 = '',
+                            this.email = ''
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="div_top"><h1>欢迎进入XXX管理中心</h1></div>
+    <div class="div_main" id="login">
+        <form class="loginForm" v-if="login_f" action="./login/submit">
+            <div class="main_title">
+                <a v-on:click="aclick" v-bind:class="{'active': login_f}" href="#">登录中心</a>
+                <a v-on:click="aclick" v-bind:class="{'active': regisyer_f}" href="#">注册中心</a>
+            </div>
+            <div class="main_middle">
+                <div class="middle_title">
+                    <h1 v-html="login_title" ></h1>
+                </div>
+                <div class="middle_main">
+                    <div v-bind:class="{'input': true,'st': login_f, 'st1':regisyer_f}">
+                        <span>用&ensp;户&ensp;名：</span>
+                        <span><input type="text" v-model="username" name="username"/></span>
+                    </div>
+                    <div v-bind:class="{'input': true,'st': login_f, 'st1':regisyer_f}">
+                        <span>密&#12288;&#12288;码：</span>
+                        <span><input type="password" v-model="password" name="password"/></span>
+                    </div>
+                </div>
+            </div>
+            <div class="main_bottom">
+                <input type="button" value="重置" v-on:click="rest"/>
+                <!--<input type="button" v-model="btnName" v-on:click="submit"/>-->
+                <input type="submit" v-model="btnName"/>
+            </div>
+        </form>
+
+        <form class="loginForm" v-if="regisyer_f" action="./login/regist">
+            <div class="main_title">
+                <a v-on:click="aclick" v-bind:class="{'active': login_f}" href="#">登录中心</a>
+                <a v-on:click="aclick" v-bind:class="{'active': regisyer_f}" href="#">注册中心</a>
+            </div>
+            <div class="main_middle">
+                <div class="middle_title">
+                    <h1 v-html="login_title" ></h1>
+                </div>
+                <div class="middle_main">
+                    <div v-bind:class="{'input': true,'st': login_f, 'st1':regisyer_f}">
+                        <span>用&ensp;户&ensp;名：</span>
+                        <span><input type="text" v-model="username"/></span>
+                    </div>
+                    <div v-bind:class="{'input': true,'st': login_f, 'st1':regisyer_f}">
+                        <span>密&#12288;&#12288;码：</span>
+                        <span><input type="password" v-model="password"/></span>
+                    </div>
+                    <div v-if="regisyer_f" class="input st1">
+                        <span>确认密码：</span>
+                        <span><input type="password" v-model="password1"/></span>
+                    </div>
+                    <div v-if="regisyer_f" class="input st1">
+                        <span>邮&#12288;&#12288;箱：</span>
+                        <span><input type="email" v-model="email"/></span>
+                    </div>
+                </div>
+            </div>
+            <div class="main_bottom">
+                <input type="button" value="重置" v-on:click="rest"/>
+                <!--<input type="button" v-model="btnName" v-on:click="submit"/>-->
+                <input type="submit" v-model="btnName"/>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

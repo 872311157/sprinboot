@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.demo.mapper.UserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.example.springboot.demo.entity.UserInfo">
+        <id column="id" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="name" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="workno" jdbcType="VARCHAR" property="workNo" />
+    </resultMap>
+
+    <select id="Sel" resultMap="BaseResultMap">
+        select * from userinfo where id = #{id}
+    </select>
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select * from userinfo
+    </select>
+
+    <select id="queryUserInfos" resultMap="BaseResultMap">
+        select * from userinfo where username = #{username}
+    </select>
+
+    <insert id="add" parameterType="com.example.springboot.demo.entity.UserInfo">
+  		insert into userinfo(id,username,age,sex,workno) values(nextval('user_id_seq'),#{name},#{age},#{sex},#{workNo})
+	</insert>
+</mapper>
