@@ -22,6 +22,6 @@
     </select>
 
     <insert id="add" parameterType="com.example.springboot.demo.entity.UserInfo">
-  		insert into userinfo(id,username,age,sex,workno) values(nextval('user_id_seq'),#{name},#{age},#{sex},#{workNo})
+  		insert into userinfo(username,age,sex,workno) values(#{name},#{age},#{sex},#{workNo})
 	</insert>
 </mapper>

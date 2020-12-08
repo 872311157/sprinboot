@@ -18,7 +18,7 @@
 
     <!--注册-->
     <insert id="insert" parameterType="com.example.springboot.demo.entity.BootUser">
-        insert into bootuser(id,username,passwords,email) values(nextval('bootuser_id_seq'),#{username},#{passwords},#{email})
+        insert into bootuser(username,passwords,email) values(#{username},#{passwords},#{email})
     </insert>
 
     <!--<select id="Sel" resultMap="BaseResultMap">

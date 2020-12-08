@@ -1,7 +1,6 @@
 package com.example.springboot.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
  * TODO
