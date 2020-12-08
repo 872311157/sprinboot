@@ -5,7 +5,7 @@ Vue.component('vue-calendar', {
                 '<tr><th><span>周天</span></th><th><span>周一</span></th>'+
                 '<th><span>周二</span></th><th><span>周三</span></th>'+
                 '<th><span>周四</span></th><th><span>周五</span></th><th><span>周六</span></th></tr></thead>'+
-            '<tbody><tr><td v-for="info in week1">{{info.day}}</td></tr>'+
+            '<tbody v-on:click="checkDay"><tr><td v-for="info in week1">{{info.day}}</td></tr>'+
                 '<tr><td v-for="info in week2">{{info.day}}</td></tr>'+
                 '<tr><td v-for="info in week3">{{info.day}}</td></tr>'+
                 '<tr><td v-for="info in week4">{{info.day}}</td></tr>'+
@@ -27,7 +27,7 @@ Vue.component('vue-calendar', {
         week4 = [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}];
         week5 = [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}];
         week6 = [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}];
-        this.initcalendar();
+        this.init_calendar();
         return {
             week1: week1,
             week2: week2,
@@ -38,8 +38,8 @@ Vue.component('vue-calendar', {
         }
     },
     methods: {
-        initcalendar: function(){
-            this.loaddatas();
+        init_calendar: function(){
+            this.load_days();
             var num = 1;
             for(var i=0; i<days.length; i++){
                 var week = days[i].week;
@@ -68,7 +68,7 @@ Vue.component('vue-calendar', {
                 }
             }
         },
-        loaddatas:function(){
+        load_days:function(){
             for (var i=0; i<7; i++){
                 week1[i].day = '';
                 week2[i].day = '';
@@ -92,14 +92,17 @@ Vue.component('vue-calendar', {
                 data: beans,
                 dataType: "json",
                 success:function(data){
-                    if(null != data && data.length > 0){
+                    if(null != data && "0" == data.code){
                         days.length = 0;
-                        for(var i in data){
-                            var day = data[i].workday;
-                            var week = data[i].workweek;
+                        var list = data.list;
+                        for(var i in list){
+                            var day = list[i].workday;
+                            var week = list[i].workweek;
                             var bean = {day: day, week: week};
                             days.push(bean);
                         }
+                    }else{
+                        days.length = 0;
                     }
                 },
                 error:function(i, s, e){
@@ -119,7 +122,7 @@ Vue.component('vue-calendar', {
             }
             this.$parent.month = this.month;
             this.$parent.year = this.year;
-            this.initcalendar();
+            this.init_calendar();
         },
         next: function (arg) {
             var year = parseInt(this.year);
@@ -132,11 +135,37 @@ Vue.component('vue-calendar', {
             }
             this.$parent.month = this.month;
             this.$parent.year = this.year;
-            this.initcalendar();
+            this.init_calendar();
+        },
+        checkDay: function (arg) {
+            var target = arg.target;
+            alert(arg.target.innerText);
         }
     },
 })
 
+Vue.component('vue-tree', {
+    template: '<ol class="tree"><li v-for="site in sites"><input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend" class="folderOne">{{site.name}}</label><li><ol>',
+    data: function () {
+        sites = [{name: "root1"},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}]
+        return {sites: sites,box: false}
+    },
+    methods: {
+        extend: function(arg){
+            debugger
+            var target = arg.target;
+            var li = document.createElement("li");
+            li.className='file folderTwo'
+            var a = document.createElement("a");
+            a.href="#";
+            a.innerText = "概述";
+            li.appendChild(a);
+            target.appendChild(li);
+            var html = '<li class="file folderTwo" ><a href="#">概述</a></li>';
+
+        }
+    }
+})
 
 
 

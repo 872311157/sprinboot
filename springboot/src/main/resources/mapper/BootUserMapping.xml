@@ -7,7 +7,7 @@
         <result column="passwords" jdbcType="VARCHAR" property="passwords" />
         <result column="sex" jdbcType="VARCHAR" property="sex" />
         <result column="age" jdbcType="INTEGER" property="age" />
-        <result column="workno" jdbcType="VARCHAR" property="workNo" />
+        <result column="workno" jdbcType="VARCHAR" property="workno" />
         <result column="email" jdbcType="VARCHAR" property="email" />
     </resultMap>
 

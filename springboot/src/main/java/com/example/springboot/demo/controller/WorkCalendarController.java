@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/calendar")
@@ -34,10 +32,18 @@ public class WorkCalendarController {
 
 	@ResponseBody
     @RequestMapping("/querylist")
-    public List<WorkCalendar> querylist(@RequestParam Map<String, String> param){
+    public Map<String, Object> querylist(@RequestParam Map<String, String> param){
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", "0");
         int year = Integer.parseInt(param.get("year"));
         int month = Integer.parseInt(param.get("month"));
-        return this.workCalendarService.queryList(year, month);
+        List<WorkCalendar> list = this.workCalendarService.queryList(year, month);
+        if(null != list && list.size() > 0){
+            result.put("list", list);
+        }else{
+            result.put("code", "-1");
+        }
+        return result;
     }
 
     @RequestMapping("/init")

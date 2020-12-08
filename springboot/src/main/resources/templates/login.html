@@ -14,8 +14,8 @@
                     login_f: true,
                     regisyer_f: false,
                     btnName: '登录',
-                    username: '',
-                    password: '',
+                    username: 'han',
+                    password: '123',
                     password1: '',
                     email: ''
                 },
@@ -36,13 +36,14 @@
                         }
                     },
                     submit:function(event){
-                        var url = "./login/error";
+                        debugger
+                        var url = "/sprinboot/error";
                         if(this.login_f)
                         {
-                            url = "./login/submit";
+                            url = "/sprinboot/submit";
                             //alert("登录");
                         }else{
-                            url = "./login/regist";
+                            url = "/sprinboot/regist";
                             //alert("注册");
                         }
                         debugger
@@ -81,7 +82,7 @@
 <body>
     <div class="div_top"><h1>欢迎进入XXX管理中心</h1></div>
     <div class="div_main" id="login">
-        <form class="loginForm" v-if="login_f" action="./login/submit">
+        <form class="loginForm" v-if="login_f" action="../login/submit">
             <div class="main_title">
                 <a v-on:click="aclick" v-bind:class="{'active': login_f}" href="#">登录中心</a>
                 <a v-on:click="aclick" v-bind:class="{'active': regisyer_f}" href="#">注册中心</a>
@@ -108,7 +109,7 @@
             </div>
         </form>
 
-        <form class="loginForm" v-if="regisyer_f" action="./login/regist">
+        <form class="loginForm" v-if="regisyer_f" action="../login/regist">
             <div class="main_title">
                 <a v-on:click="aclick" v-bind:class="{'active': login_f}" href="#">登录中心</a>
                 <a v-on:click="aclick" v-bind:class="{'active': regisyer_f}" href="#">注册中心</a>

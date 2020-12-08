@@ -3,15 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>XXX系统管理中心</title>
+    <link rel="stylesheet" href="/springboot/css/main.css">
+    <link rel="stylesheet" href="/springboot/css/vue-tree.css">
     <script src="/springboot/js/vue.js"></script>
+    <script src="/springboot/js/vue-utils.js"></script>
     <script>
         window.onload = function(){
             debugger
+            new Vue({
+                el: '#app',
+                data: {
+                }
+            })
         }
     </script>
 </head>
 <body>
-<p th:text="${session.user.username}" />
-<h1>欢迎登陆！</h1>
+<div id="app" class="main_body">
+    <div class="main_top">
+        <span th:text="${session.user.username}"></span>
+    </div>
+    <div class="main_left">
+        <vue-tree></vue-tree>
+    </div>
+    <div class="main_right"></div>
+</div>
 </body>
 </html>
