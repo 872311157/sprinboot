@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/springboot/css/calendar.css"></script>
+    <script src="/springboot/js/vue.js"></script>
+    <script src="/springboot/js/jquery-3.5.1.js"></script>
+    <script src="/springboot/js/vue-utils.js"></script>
+    <script>
+        window.onload = function(){
+            debugger
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+            new Vue({
+                el: '#app',
+                data: {
+                    year: year,
+                    month: month
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h1>
+                <span v-html="year"></span>
+                <span>--</span>
+                <span v-html="month"></span>
+            </h1>
+        </div>
+
+        <vue-calendar v-bind:month="month" v-bind:year="year"></vue-calendar>
+    </div>
+</body>
+</html>
