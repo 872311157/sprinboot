@@ -17,6 +17,7 @@ import java.sql.SQLException;
  */
 @Component
 public class DataUtil {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
