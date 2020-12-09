@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>登陆界面</title>
@@ -82,7 +82,7 @@
 <body>
     <div class="div_top"><h1>欢迎进入XXX管理中心</h1></div>
     <div class="div_main" id="login">
-        <form class="loginForm" v-if="login_f" action="../login/submit">
+        <form class="loginForm" v-if="login_f" action="/springboot/login/submit">
             <div class="main_title">
                 <a v-on:click="aclick" v-bind:class="{'active': login_f}" href="#">登录中心</a>
                 <a v-on:click="aclick" v-bind:class="{'active': regisyer_f}" href="#">注册中心</a>
@@ -109,7 +109,7 @@
             </div>
         </form>
 
-        <form class="loginForm" v-if="regisyer_f" action="../login/regist">
+        <form class="loginForm" v-if="regisyer_f" action="/springboot/login/regist">
             <div class="main_title">
                 <a v-on:click="aclick" v-bind:class="{'active': login_f}" href="#">登录中心</a>
                 <a v-on:click="aclick" v-bind:class="{'active': regisyer_f}" href="#">注册中心</a>

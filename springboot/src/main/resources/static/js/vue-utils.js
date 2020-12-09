@@ -144,25 +144,44 @@ Vue.component('vue-calendar', {
     },
 })
 
-Vue.component('vue-tree', {
-    template: '<ol class="tree"><li v-for="site in sites"><input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend" class="folderOne">{{site.name}}</label><li><ol>',
+Vue.component('vue-tree2', {
+    template: '<ol class="tree">'+
+        '<li v-for="site in sites">'+
+            '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" class="folderOne">{{site.name}}</label>'+
+            '<ol v-for="note in site.notes"><li class="file folderThree"><a href="#">{{note.name}}</a></li></ol>'+
+        '<li>'+
+    '<ol>',
     data: function () {
-        sites = [{name: "root1"},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}]
+        sites = [{name: "root1", notes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}]
         return {sites: sites,box: false}
     },
     methods: {
-        extend: function(arg){
+        init_nodes: function(arg){
             debugger
-            var target = arg.target;
+            var target = arg.target.parentElement;
+            var ol = document.createElement("ol");
             var li = document.createElement("li");
             li.className='file folderTwo'
             var a = document.createElement("a");
             a.href="#";
             a.innerText = "概述";
             li.appendChild(a);
-            target.appendChild(li);
+            ol.appendChild(li);
+            target.appendChild(ol);
             var html = '<li class="file folderTwo" ><a href="#">概述</a></li>';
-
+        },
+        extend_nodes: function(arg){
+            debugger
+            var ols = arg.target.parentNode.getElementsByTagName("ol");
+            Array.prototype.slice.call(ols).forEach(function(item, i){
+                debugger
+                var e = item.style.display;
+                if("block" == e || "" == e){
+                    item.style.display = "none";
+                }else{
+                    item.style.display = "block";
+                }
+            })
         }
     }
 })
