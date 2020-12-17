@@ -40,14 +40,6 @@
 </head>
 <body>
     <tr>
-        用户姓名：<input name="id" th:value="${userName}"/><br>
-        电话：<input type="text" name="password" th:value="${phone}"/><br>
-    </tr>
-    <tr th:each="user : ${userList}">
-        <td><a href="#" th:text="${user.getName()}">Title ...</a></td>
-        <td th:text="${user.getWorkNo()}">1</td><br>
-    </tr>
-    <tr>
         <input type="button" onclick="sendLROARequest()" value="加密测试"/>
     </tr>
 </body>

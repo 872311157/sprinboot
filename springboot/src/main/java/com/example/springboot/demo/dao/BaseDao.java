@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class BaseDao implements IBaseDao{
+public class BaseDao<T> implements IBaseDao{
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    public JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Map<String, Object>> queryList(String tableName) {
+    public List<T> queryList(String tableName) {
         String sql = "select * from " + tableName;
-        return this.jdbcTemplate.queryForList(sql);
+        return (List<T>) this.jdbcTemplate.queryForList(sql);
     }
 }

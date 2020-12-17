@@ -26,6 +26,11 @@ public class TestController {
     @Autowired
     TestService testService;
 
+    @RequestMapping("")
+    public String touser(){
+        return "test/LROA";
+    }
+
     @RequestMapping("/test1")
     public void tset(){
         List<Map<String, Object>> maps = this.testService.queryTable("userinfo");

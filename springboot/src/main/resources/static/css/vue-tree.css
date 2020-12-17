@@ -22,9 +22,10 @@
     list-style: none;
 }
 /*一级菜单加下边线*/
-.tree>li{
-    border-bottom: 1px solid #d9d9d9;
-}
+/*.tree>li{
+    border-bottom: 1px solid #afaaaa;
+}*/
+
 /*给有子菜单的菜单项添加背景图标*/
 .tree li label {
     width: 100%;
@@ -37,6 +38,7 @@
     white-space:nowrap;
     overflow:hidden;
     text-overflow: ellipsis;
+    border-bottom: 1px solid #afaaaa;
 }
 .tree li label:hover,li label:focus{
     background-color:#a7a7a7;color:#fff;

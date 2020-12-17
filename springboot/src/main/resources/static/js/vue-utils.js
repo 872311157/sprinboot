@@ -145,33 +145,43 @@ Vue.component('vue-calendar', {
 })
 
 Vue.component('vue-tree2', {
+    props: ['userid'],
     template: '<ol class="tree">'+
         '<li v-for="site in sites">'+
             '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" class="folderOne">{{site.name}}</label>'+
-            '<ol v-for="note in site.notes"><li class="file folderThree"><a href="#">{{note.name}}</a></li></ol>'+
+            '<ol v-for="note in site.notes"><li class="file folderTwo"><label>{{note.name}}</label></li></ol>'+
         '<li>'+
     '<ol>',
     data: function () {
-        sites = [{name: "root1", notes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}]
+        var sites = this.init_nodes();
         return {sites: sites,box: false}
     },
     methods: {
-        init_nodes: function(arg){
+        init_nodes: function(){
             debugger
-            var target = arg.target.parentElement;
-            var ol = document.createElement("ol");
-            var li = document.createElement("li");
-            li.className='file folderTwo'
-            var a = document.createElement("a");
-            a.href="#";
-            a.innerText = "概述";
-            li.appendChild(a);
-            ol.appendChild(li);
-            target.appendChild(ol);
-            var html = '<li class="file folderTwo" ><a href="#">概述</a></li>';
+            var userid = this.userid;
+            var url = "/springboot/module/queryByUserid";
+            $.ajax({
+                type: "post",
+                async: false,//同步，异步
+                url: url, //请求的服务端地址
+                data: {userid: this.userid},
+                dataType: "json",
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(i, s, e){
+                    flag = false;
+                    alert('error'); //错误的处理
+                }
+            });
+
+
+            var nodes = [{name: "root1", notes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}];
+            return nodes;
         },
         extend_nodes: function(arg){
-            debugger
+            console.log(this.userid);
             var ols = arg.target.parentNode.getElementsByTagName("ol");
             Array.prototype.slice.call(ols).forEach(function(item, i){
                 debugger

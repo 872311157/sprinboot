@@ -3,11 +3,11 @@ package com.example.springboot.demo.dao;
 import java.util.List;
 import java.util.Map;
 
-public interface IBaseDao {
+public interface IBaseDao<T> {
     /**
      * 查询列表
      * @param tableName
      * @return
      */
-    public List<Map<String, Object>> queryList(String tableName);
+    public List<T> queryList(String tableName);
 }

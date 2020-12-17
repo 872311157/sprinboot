@@ -1,15 +1,16 @@
 body, html{
 	width: 100%;
 	height: 100%;
+	margin: 0px;
 }
 .main_body{
 	width: 100%;
 	height: 100%;
-	background-color: azure;
 }
 .main_body .main_top{
     width:100%;
     height:10%;
+    background-color: #5179d2;
 }
 .main_body .main_left{
     width:15%;
