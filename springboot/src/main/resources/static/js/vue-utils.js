@@ -159,6 +159,8 @@ Vue.component('vue-tree2', {
     methods: {
         init_nodes: function(){
             debugger
+            //var nodes = [{name: "root1", notes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}];
+            var nodes = new Array();;
             var userid = this.userid;
             var url = "/springboot/module/queryByUserid";
             $.ajax({
@@ -168,6 +170,12 @@ Vue.component('vue-tree2', {
                 data: {userid: this.userid},
                 dataType: "json",
                 success:function(data){
+                    $(data).each(function(i, item){
+                        var modulename = item.modulename;
+                        var node = {name: modulename};
+                        nodes.push(node);
+                        console.log(i+"-"+j);
+                    })
                     console.log(data);
                 },
                 error:function(i, s, e){
@@ -175,13 +183,10 @@ Vue.component('vue-tree2', {
                     alert('error'); //错误的处理
                 }
             });
-
-
-            var nodes = [{name: "root1", notes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}];
             return nodes;
         },
         extend_nodes: function(arg){
-            console.log(this.userid);
+            debugger
             var ols = arg.target.parentNode.getElementsByTagName("ol");
             Array.prototype.slice.call(ols).forEach(function(item, i){
                 debugger

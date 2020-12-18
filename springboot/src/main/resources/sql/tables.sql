@@ -96,3 +96,18 @@ select ru.userid, ru.roleid, m.* from bootuser u
 left join boot_roleuser ru on u.id=ru.userid
 left join boot_rolemodule rm on ru.roleid = rm.roleid
 left join bootmodule m on rm.moduleid = m.id where m.mtype=0 and parentid=0
+
+--初始化数据
+INSERT INTO bootmodule(id, modulename, moduleaddress, parentid, mtype) VALUES(1, '系统管理', '', 0, 0);
+INSERT INTO bootmodule(id, modulename, moduleaddress, parentid, mtype) VALUES(2, '模块管理', './system/module/module_list.html', 1, 1);
+INSERT INTO bootmodule(id, modulename, moduleaddress, parentid, mtype) VALUES(3, '角色管理', './system/module/role_list.html', 1, 1);
+INSERT INTO bootmodule(id, modulename, moduleaddress, parentid, mtype) VALUES(4, '系统管理', './system/module/system_list.html', 1, 1);
+INSERT INTO bootmodule(id, modulename, moduleaddress, parentid, mtype) VALUES(5, '用户管理', './system/module/user_list.html', 1, 1);
+
+--postgresql递归查询
+WITH RECURSIVE r AS (
+   SELECT * FROM bootmodule WHERE id = 1
+   union ALL
+   SELECT bootmodule.* FROM bootmodule, r WHERE bootmodule.parentid = r.id
+)
+SELECT * FROM r ORDER BY id asc;

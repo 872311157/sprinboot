@@ -18,4 +18,9 @@ public class ModuleService implements IModuleService{
     public List<BootModule> queryByUserid(Integer userid) {
         return this.moduleDao.queryByUserid(userid);
     }
+
+    @Override
+    public List<BootModule> queryChildsById(Integer id) {
+        return this.moduleDao.queryChildsById(id);
+    }
 }

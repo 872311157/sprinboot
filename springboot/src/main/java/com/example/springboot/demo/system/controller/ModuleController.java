@@ -35,4 +35,16 @@ public class ModuleController {
         List<BootModule> modules = this.moduleService.queryByUserid(userid);
         return modules;
     }
+
+    /**
+     * 根据模块id查询子模块
+     * @param param
+     * @return
+     */
+    @RequestMapping("queryChildsById")
+    public List<BootModule> queryChildsById(@RequestParam Map<String, String> param){
+        Integer id = Integer.parseInt(param.get("id"));
+        List<BootModule> modules = this.moduleService.queryChildsById(id);
+        return modules;
+    }
 }

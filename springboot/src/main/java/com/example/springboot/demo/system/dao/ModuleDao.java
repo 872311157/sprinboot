@@ -44,4 +44,10 @@ public class ModuleDao extends BaseDao<BootModule> implements IModuleDao{
         });
         return mlist;
     }
+
+    @Override
+    public List<BootModule> queryChildsById(Integer id) {
+        String sql = "select * from bootmodule where parentid=" + id;
+        return this.queryBySql(sql);
+    }
 }
