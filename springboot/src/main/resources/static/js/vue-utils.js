@@ -148,7 +148,7 @@ Vue.component('vue-tree2', {
     props: ['userid'],
     template: '<ol class="tree">'+
         '<li v-for="site in sites">'+
-            '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" class="folderOne">{{site.name}}</label>'+
+            '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" class="folderOne" :nid="site.id">{{site.name}}</label>'+
             '<ol v-for="note in site.notes"><li class="file folderTwo"><label>{{note.name}}</label></li></ol>'+
         '<li>'+
     '<ol>',
@@ -172,9 +172,8 @@ Vue.component('vue-tree2', {
                 success:function(data){
                     $(data).each(function(i, item){
                         var modulename = item.modulename;
-                        var node = {name: modulename};
+                        var node = {name: modulename, id:1};
                         nodes.push(node);
-                        console.log(i+"-"+j);
                     })
                     console.log(data);
                 },
