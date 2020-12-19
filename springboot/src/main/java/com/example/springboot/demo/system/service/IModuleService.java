@@ -1,5 +1,7 @@
 package com.example.springboot.demo.system.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.springboot.demo.system.entity.BootModule;
 
 import java.util.List;
@@ -10,7 +12,7 @@ public interface IModuleService {
      * @param userid
      * @return
      */
-    public List<BootModule> queryByUserid(Integer userid);
+    public JSONArray queryByUserid(Integer userid);
     /**
      * 根据模块id查询子模块
      * @param id

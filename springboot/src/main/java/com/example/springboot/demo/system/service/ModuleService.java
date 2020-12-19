@@ -1,5 +1,7 @@
 package com.example.springboot.demo.system.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.springboot.demo.system.dao.IModuleDao;
 import com.example.springboot.demo.system.entity.BootModule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class ModuleService implements IModuleService{
 
 
     @Override
-    public List<BootModule> queryByUserid(Integer userid) {
+    public JSONArray queryByUserid(Integer userid) {
         return this.moduleDao.queryByUserid(userid);
     }
 

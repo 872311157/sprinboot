@@ -160,7 +160,7 @@ Vue.component('vue-tree2', {
         init_nodes: function(){
             debugger
             //var nodes = [{name: "root1", notes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}];
-            var nodes = new Array();;
+            var nodes = new Array();
             var userid = this.userid;
             var url = "/springboot/module/queryByUserid";
             $.ajax({
@@ -171,8 +171,9 @@ Vue.component('vue-tree2', {
                 dataType: "json",
                 success:function(data){
                     $(data).each(function(i, item){
+                        var id = item.id;
                         var modulename = item.modulename;
-                        var node = {name: modulename, id:1};
+                        var node = {name: modulename, id: id};
                         nodes.push(node);
                     })
                     console.log(data);
@@ -187,15 +188,41 @@ Vue.component('vue-tree2', {
         extend_nodes: function(arg){
             debugger
             var ols = arg.target.parentNode.getElementsByTagName("ol");
-            Array.prototype.slice.call(ols).forEach(function(item, i){
-                debugger
-                var e = item.style.display;
-                if("block" == e || "" == e){
-                    item.style.display = "none";
-                }else{
-                    item.style.display = "block";
-                }
-            })
+            var len = ols.length;
+            if(len > 0){
+                Array.prototype.slice.call(ols).forEach(function(item, i){
+                    debugger
+                    var e = item.style.display;
+                    if("block" == e || "" == e){
+                        item.style.display = "none";
+                    }else{
+                        item.style.display = "block";
+                    }
+                })
+            }else{
+                var nid = arg.target.getAttribute("nid");
+                var url = "/springboot/module/queryChildsById";
+                $.ajax({
+                    type: "post",
+                    async: false,//同步，异步
+                    url: url, //请求的服务端地址
+                    data: {id: nid},
+                    dataType: "json",
+                    success:function(data){
+                        $(data).each(function(i, item){
+                            var id = item.id;
+                            var modulename = item.modulename;
+                            var node = {name: modulename, id: id};
+                            nodes.push(node);
+                        })
+                        console.log(data);
+                    },
+                    error:function(i, s, e){
+                        flag = false;
+                        alert('error'); //错误的处理
+                    }
+                });
+            }
         }
     }
 })
