@@ -144,23 +144,25 @@ Vue.component('vue-calendar', {
     },
 })
 
+/*树形结构*/
 Vue.component('vue-tree2', {
     props: ['userid'],
     template: '<ol class="tree">'+
         '<li v-for="site in sites">'+
             '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" class="folderOne" :nid="site.id">{{site.name}}</label>'+
-            '<ol v-for="note in site.notes"><li class="file folderTwo"><label>{{note.name}}</label></li></ol>'+
+            '<ol style="display: none;" v-for="node in site.nodes"><li class="file folderTwo"><label v-on:click="open_page" :nid="node.id">{{node.name}}</label></li></ol>'+
         '<li>'+
     '<ol>',
+    sites: [],
     data: function () {
-        var sites = this.init_nodes();
+        sites = this.init_nodes();
         return {sites: sites,box: false}
     },
     methods: {
         init_nodes: function(){
             debugger
-            //var nodes = [{name: "root1", notes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}];
-            var nodes = new Array();
+            //var sites = [{name: "root1", nodes:[{"name":"test1"},{"name":"test2"}]},{name: "root2"},{name: "root3"},{name: "root4"},{name: "root5"}];
+            sites = new Array();
             var userid = this.userid;
             var url = "/springboot/module/queryByUserid";
             $.ajax({
@@ -171,10 +173,12 @@ Vue.component('vue-tree2', {
                 dataType: "json",
                 success:function(data){
                     $(data).each(function(i, item){
-                        var id = item.id;
-                        var modulename = item.modulename;
-                        var node = {name: modulename, id: id};
-                        nodes.push(node);
+                        var site = {
+                            name: item.modulename,
+                            id: item.id,
+                            nodes: item.nodes
+                        };
+                        sites.push(site);
                     })
                     console.log(data);
                 },
@@ -183,7 +187,7 @@ Vue.component('vue-tree2', {
                     alert('error'); //错误的处理
                 }
             });
-            return nodes;
+            return sites;
         },
         extend_nodes: function(arg){
             debugger
@@ -199,30 +203,10 @@ Vue.component('vue-tree2', {
                         item.style.display = "block";
                     }
                 })
-            }else{
-                var nid = arg.target.getAttribute("nid");
-                var url = "/springboot/module/queryChildsById";
-                $.ajax({
-                    type: "post",
-                    async: false,//同步，异步
-                    url: url, //请求的服务端地址
-                    data: {id: nid},
-                    dataType: "json",
-                    success:function(data){
-                        $(data).each(function(i, item){
-                            var id = item.id;
-                            var modulename = item.modulename;
-                            var node = {name: modulename, id: id};
-                            nodes.push(node);
-                        })
-                        console.log(data);
-                    },
-                    error:function(i, s, e){
-                        flag = false;
-                        alert('error'); //错误的处理
-                    }
-                });
             }
+        },
+        open_page: function(arg){
+
         }
     }
 })

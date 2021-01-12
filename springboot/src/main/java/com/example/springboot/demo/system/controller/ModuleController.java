@@ -34,7 +34,6 @@ public class ModuleController {
      */
     @RequestMapping("queryByUserid")
     public JSONArray queryByUserid(@RequestParam Map<String, String> param){
-        JSONObject root = new JSONObject();
         Integer userid = Integer.parseInt(param.get("userid"));
         JSONArray modules = this.moduleService.queryByUserid(userid);
         for(Object obj : modules){
@@ -42,11 +41,9 @@ public class ModuleController {
                 JSONObject module = (JSONObject)obj;
                 String name = module.getString("modulename");
                 int id = module.getInteger("id");
-                root.put("name", name);
-                root.put("id", id);
-                JSONObject nodes = new JSONObject();
+                JSONArray nodes = new JSONArray();
                 queryChildModule(nodes, id);
-                root.put("notes", nodes);
+                module.put("nodes", nodes);
             }
         }
         return modules;
@@ -57,18 +54,20 @@ public class ModuleController {
      * @param id
      * @return
      */
-    public void queryChildModule(JSONObject root, Integer id){
+    public void queryChildModule(JSONArray nodes, Integer id){
         List<BootModule> modules = this.moduleService.queryChildsById(id);
         for(BootModule module : modules){
+            JSONObject node = new JSONObject();
             String name = module.getModulename();
-            root.put("name", name);
-            root.put("id", id);
+            node.put("name", name);
+            node.put("id", id);
+            //0分类，1引用
             if(module.getMtype() == 0){
-                JSONObject child = new JSONObject();
-                int mid = module.getId();
-                queryChildModule(child, mid);
-                root.put("nodes", child);
+                JSONArray childs = new JSONArray();
+                queryChildModule(childs, module.getId());
+                node.put("nodes", childs);
             }
+            nodes.add(node);
         }
     }
 }
